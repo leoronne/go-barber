@@ -1,5 +1,5 @@
 //Application name
-APP_NAME=eColeta
+APP_NAME=Go Barber
 
 //Database ambient (prod/dev/test)
 DBAMBIENT=development

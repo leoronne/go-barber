@@ -13,5 +13,5 @@ build/
 
 .package-lock.json
 
-temp/*
-!temp/.gitkeep
+server/temp/*.*
+server/!temp/.gitkeep
