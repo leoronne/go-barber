@@ -1,8 +1,9 @@
 <p align="center">
-  <img src="/assets/img/logo-interna.svg" width="500px"/>
+  <img src="/assets/img/logo-interna.svg" width="300px"/>
 </p>
 
 <h2>Go Barber</h2>
+
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 ![GitHub last commit](https://img.shields.io/github/last-commit/leoronne/go-barber?color=green&style=flat-square)
 ![GitHub top language](https://img.shields.io/github/languages/top/leoronne/go-barber?style=flat-square)
