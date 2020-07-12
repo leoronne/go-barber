@@ -1,0 +1,41 @@
+//Application name
+APP_NAME=eColeta
+
+//Database ambient (prod/dev/test)
+DBAMBIENT=development
+
+//Host of the Database (if it is local or clod, aws etc)
+DB_HOST=
+
+//Database name
+DB_DATABASE=
+
+//Database user
+DB_USER=
+
+//Database password
+DB_PASSWORD=
+
+//Application mail (the one that will receive the emails as bcc)
+APP_MAIL=
+
+//Application email service user (it's using sendgrid)
+MAIL_USER=
+
+//Application email service password
+MAIL_PASS=
+
+//Type of storage of pictures
+STORAGE_TYPE=local
+
+//Bucket of the picture storage (AWS)
+BUCKET_NAME=
+
+//AWS access key ID
+AWS_ACCESS_KEY_ID=
+
+//AWS secret access key
+AWS_SECRET_ACCESS_KEY=
+
+//AWS default region
+AWS_DEFAULT_REGION=

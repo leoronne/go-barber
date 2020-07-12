@@ -1,0 +1,17 @@
+{
+  "name": "eColeta",
+  "version": "1.0.0",
+  "author": "Leonardo Ronne",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "npm install --prefix server",
+    "installapp": "cd ./server/ && npm install && cd ./interface && npm install",
+    "startinterface": "cd ./interface/ && npm start",
+    "installinterface": "cd ./interface/ && npm install",
+    "installserver": "cd ./server/ && npm install",
+    "startserver": "cd ./server/ && yarn dev"
+  },
+  "engines": {
+    "node": "12.16.2"
+  }
+}

@@ -1,0 +1,17 @@
+node_modules/
+
+.vscode/
+
+build/
+
+.env
+
+.env.production
+.env.development
+
+.gitattributes
+
+.package-lock.json
+
+temp/*
+!temp/.gitkeep
