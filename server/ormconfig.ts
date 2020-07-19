@@ -1,5 +1,3 @@
-import path from 'path';
-
 require('dotenv/config');
 
 module.exports = {
@@ -9,9 +7,21 @@ module.exports = {
   database: process.env.DB_DATABASE,
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  entities: ['./src/app/models/*.ts'],
-  migrations: ['./src/database/migrations/*.ts'],
+  entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
+  migrations: ['./src/shared/infra/database/migrations/*.ts'],
   cli: {
-    migrationsDir: './src/database/migrations',
+    migrationsDir: './src/shared/infra/database/migrations',
   },
 };
+
+// {
+//   "name": "mongodb",
+//   "type": "mongodb",
+//   "host": "localhost",
+//   "port": 27017,
+//   "database": "gobarber",
+//   "useUnifiedTopology": true,
+//   "entities": [
+//     "./src/modules/**/infra/typeorm/schemas/*.ts"
+//   ]
+// }
