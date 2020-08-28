@@ -20,8 +20,6 @@ class S3StorageProvider implements IStorageProvider {
   public async saveFile(file: string): Promise<string> {
     const originalPath = path.resolve(uploadConfig.tmpfolder, file);
 
-    console.log(originalPath);
-
     const fileContent = await fs.promises.readFile(originalPath, {
       encoding: null,
     });
@@ -39,6 +37,7 @@ class S3StorageProvider implements IStorageProvider {
         ACL: 'public-read',
         ContentType: fileType,
         Body: fileContent,
+        ContentDisposition: `inline; filename${file}`,
       })
       .promise();
 

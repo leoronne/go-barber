@@ -7,7 +7,7 @@ interface AuthContextProps {
   signIn(email: string, password: string): Promise<void>;
   signOut(): void;
   loading: boolean;
-  user: Object;
+  user: User;
 }
 
 interface User {

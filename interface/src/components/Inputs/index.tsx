@@ -29,8 +29,8 @@ const NameInput: React.FC<Props> = ({ touched, errors, value, handleChange, hand
 
   const iconColor = () => {
     if (touched && errors) return 'var(--error)';
-    else if (focused) return 'var(--primary)';
-    else return 'var(--light-gray)';
+    if (focused) return 'var(--primary)';
+    return 'var(--light-gray)';
   };
 
   return (
@@ -41,7 +41,10 @@ const NameInput: React.FC<Props> = ({ touched, errors, value, handleChange, hand
         type="text"
         placeholder={t('name')}
         onChange={handleChange}
-        onBlur={handleBlur}
+        onBlur={e => {
+          handleBlur(e);
+          setFocused(false);
+        }}
         onFocus={() => setFocused(true)}
         value={value}
         className={touched && errors ? 'error' : null}
@@ -61,8 +64,8 @@ const EmailInput: React.FC<Props> = ({ touched, errors, value, handleChange, han
 
   const iconColor = () => {
     if (touched && errors) return 'var(--error)';
-    else if (focused) return 'var(--primary)';
-    else return 'var(--light-gray)';
+    if (focused) return 'var(--primary)';
+    return 'var(--light-gray)';
   };
 
   return (
@@ -73,7 +76,10 @@ const EmailInput: React.FC<Props> = ({ touched, errors, value, handleChange, han
         type="email"
         placeholder={t('email')}
         onChange={handleChange}
-        onBlur={handleBlur}
+        onBlur={e => {
+          handleBlur(e);
+          setFocused(false);
+        }}
         onFocus={() => setFocused(true)}
         value={value}
         className={touched && errors ? 'error' : null}
@@ -96,8 +102,8 @@ const PasswordInput: React.FC<Props> = ({ touched, errors, value, handleChange, 
 
   const iconColor = () => {
     if (touched && errors) return 'var(--error)';
-    else if (focused) return 'var(--primary)';
-    else return 'var(--light-gray)';
+    if (focused) return 'var(--primary)';
+    return 'var(--light-gray)';
   };
 
   function ShowPassword() {
@@ -125,7 +131,10 @@ const PasswordInput: React.FC<Props> = ({ touched, errors, value, handleChange, 
         type={showPassword ? 'text' : 'password'}
         placeholder={t('password')}
         onChange={handleChange}
-        onBlur={handleBlur}
+        onBlur={e => {
+          handleBlur(e);
+          setFocused(false);
+        }}
         onFocus={() => setFocused(true)}
         value={value}
         className={touched && errors ? 'error' : null}

@@ -1,36 +1,35 @@
 import React from 'react';
 
-import logo from '../../assets/img/logo.png';
-import avatar from '../../assets/img/avatar.jpg';
+import { FiPower } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/auth';
 
-import { Container } from './styles';
+import logoImg from '~/assets/svg/logo.svg';
+
+import { Container, HeaderContent, Profile, Info } from './styles';
 
 const Header: React.FC = () => {
-  const userName = 'Leonardo Ronne';
+  const { signOut, user } = useAuth();
+
   return (
-    <Container data-testid="header-cointainer">
-      <div className="header-cointainer">
-        <div className="header-left">
-          <a href="/">
-            <img src={logo} alt="Shooping Cart Challenge" className="logo" data-tip="Home Page" data-testid="logo" />
-          </a>
-          <p className="header-title">Shopping</p>
-        </div>
-        <div className="header-right">
-          <li className="nav-profile" data-testid="nav-profile">
-            <a
-              href="https://github.com/leoronne"
-              className={'icon-profile-active'}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-tip={`Connected as ${userName}`}
-            >
-              <img src={avatar} alt={userName} className="avatar-profile" />
-              <span>{userName}</span>
-            </a>
-          </li>
-        </div>
-      </div>
+    <Container>
+      <HeaderContent>
+        <img src={logoImg} alt="logo" />
+
+        <Profile>
+          <img src={user.avatar_url} alt={user.id} />
+          <Info>
+            <span>Bem-vindo(a), </span>
+            <Link to="/profile">
+              <strong>{user.name}</strong>
+            </Link>
+          </Info>
+        </Profile>
+
+        <button onClick={signOut} type="button">
+          <FiPower />
+        </button>
+      </HeaderContent>
     </Container>
   );
 };

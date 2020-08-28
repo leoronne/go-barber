@@ -6,12 +6,12 @@
   "version": "1.0.0",
   "main": "server.ts",
   "scripts": {
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "start": "ts-node src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "run:migration": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migrations:run",
-    "revert:migration": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migrations:revert",
-    "create:migration": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migrations:create -n",
+    "run:migration": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run",
+    "revert:migration": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert",
+    "create:migration": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create -n",
     "test": "jest",
     "jest:cache": "jest --clearCache"
   },

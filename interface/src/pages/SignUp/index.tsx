@@ -26,7 +26,7 @@ const SignUp: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  const handleSubmit = useCallback(
+  const handleRegister = useCallback(
     async (data: SignUpFormData) => {
       try {
         setLoading(true);
@@ -40,7 +40,7 @@ const SignUp: React.FC = () => {
         setLoading(false);
       }
     },
-    [history]
+    [history, t]
   );
 
   return (
@@ -56,9 +56,9 @@ const SignUp: React.FC = () => {
               password: '',
             }}
             validationSchema={Schemas('register')}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
+            onSubmit={(values, { setSubmitting }) => {
               setSubmitting(true);
-              handleSubmit(values);
+              handleRegister(values);
               setSubmitting(false);
             }}
           >
@@ -74,7 +74,7 @@ const SignUp: React.FC = () => {
 
                   <PasswordInput handleBlur={handleBlur} handleChange={handleChange} value={values.password} errors={errors.password} touched={touched.password} shoowTooltip />
 
-                  <Button disableCond={!loading ? false : true} defaultText={t('register')} loading={loading} size={14} />
+                  <Button disableCond={!!loading} defaultText={t('register')} loading={loading} size={14} />
                 </form>
               </Content>
             )}
