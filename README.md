@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/assets/img/logo-interna.svg" width="300px"/>
+  <img src="assets/img/logo-interna.svg" width="300px"/>
 </p>
 
 <h2>Go Barber</h2>
