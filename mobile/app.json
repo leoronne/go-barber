@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Go Barber",
+    "slug": "GoBarber",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/img/icon.png",
+    "splash": {
+      "image": "./assets/img/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#E02041"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.leoronne.gobarber"
+    },
+    "android": {
+      "package": "com.leoronne.gobarber",
+      "icon": "./assets/img/icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/img/logoTransparent.png",
+        "backgroundColor": "#E02041"
+      }
+    }
+  },
+  "name": "gobarber",
+  "displayName": "gobarber"
+}

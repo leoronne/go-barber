@@ -62,7 +62,7 @@ const AuthProvider: React.FC = ({ children }) => {
         setData({ token, user });
       } catch (err) {
         signOut();
-        notify(err.response && err.response.data ? err.response.data.message : err.message, 'error');
+        notify(err?.response?.data?.message ? err.response.data.message : err.message, 'error');
       } finally {
         setLoading(false);
       }

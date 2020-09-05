@@ -6,7 +6,7 @@ export default function Schemas(schema: string): Yup.ObjectSchema {
 
   const loginSchema = Yup.object().shape({
     email: Yup.string().email(t('validmail')).trim(t('validmail')).nullable(false).required(t('requiredemail')),
-    password: Yup.string().required(t('requiredpassword')),
+    password: Yup.string().trim(t('requiredpassword')).required(t('requiredpassword')),
   });
 
   const registerSchema = Yup.object().shape({

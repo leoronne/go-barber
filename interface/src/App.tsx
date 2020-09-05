@@ -10,7 +10,7 @@ import GlobalStyles from './styles/GlobalStyles';
 
 import './styles/ReactToastify.css';
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <Router>
@@ -22,6 +22,6 @@ function App() {
       </Router>
     </>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,19 @@
+{
+  "name": "Name",
+  "validname": "Invalid name",
+  "requiredename": "Name is a required field",
+  "email": "Email address",
+  "validmail": "Invalid email",
+  "requiredemail": "Email is a required field",
+  "password": "Password",
+  "validpassword": "Weak password",
+  "requiredpassword": "Password is a required field",
+  "passwordtooltip": "Your password must contain at least 6 characters, including: a lowercase letter, a capital letter and a number",
+  "sessionStart": "Logon to your account",
+  "createAccount": "Create an account",
+  "sessionStartButton": "Login",
+  "register": "Register",
+  "forgotpassword": "Forgot your password?",
+  "userCreated": "User registered successfully",
+  "userCanLogin": "You can now log into the application"
+}

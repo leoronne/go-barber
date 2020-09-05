@@ -13,7 +13,7 @@ const iconCSS = css`
 `;
 
 export const Content = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   text-align: left;
 
   label {
@@ -60,8 +60,8 @@ export const Content = styled.div`
     color: var(--error);
     padding: 1px 2px;
     position: absolute;
-    font-size: 10px;
-    margin: 0px 0 5px 0;
+    font-size: 11px;
+    margin: 3px 0 10px 0;
   }
 `;
 

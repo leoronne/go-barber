@@ -1,0 +1,19 @@
+{
+  "name": "Nome",
+  "validname": "Informe um nome válido",
+  "requiredename": "Nome é um campo obrigatório",
+  "email": "Email",
+  "validmail": "Informe um email válido",
+  "requiredemail": "Email é um campo obrigatório",
+  "password": "Senha",
+  "validpassword": "Inclua uma senha mais forte",
+  "passwordtooltip": "A sua senha deve conter no mínimo 6 caracteres, entre eles: uma letra minúscula, uma maiúscula e um número",
+  "requiredpassword": "Senha é um campo obrigatório",
+  "sessionStart": "Faça seu logon",
+  "createAccount": "Crie uma conta",
+  "sessionStartButton": "Entrar",
+  "register": "Registrar",
+  "forgotpassword": "Esqueceu sua senha?",
+  "userCreated": "Registro realizado com sucesso",
+  "userCanLogin": "Você já pode fazer logon na aplicação"
+}
