@@ -9,7 +9,7 @@ class ProvidersMonthAvailabilitycontroller {
   public async index(request: Request, response: Response): Promise<Response> {
     try {
       const { provider_id } = request.params;
-      const { month, year } = request.query;
+      const { month = new Date().getMonth() + 1, year = new Date().getFullYear() } = request.query;
 
       const listProviderMonthAvailabiltiy = container.resolve(ListProviderMonthAvailabilityService);
 

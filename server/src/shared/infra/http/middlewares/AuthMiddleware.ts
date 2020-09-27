@@ -32,7 +32,7 @@ export default function ensureAuthentication(req: Request, res: Response, next: 
 
       return next();
     } catch {
-      return res.status(404).send({ message: 'Invalid JWT token' });
+      return res.status(404).send({ message: 'Invalid token' });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });

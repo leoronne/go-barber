@@ -22,3 +22,6 @@ export const { MAIL_DRIVER } = process.env;
 export const { MAIL_USER } = process.env;
 export const { MAIL_PASS } = process.env;
 export const { MAIL_FROM } = process.env;
+export const { REDIS_HOST } = process.env;
+export const { REDIS_PORT } = process.env;
+export const { REDIS_PASS } = process.env;

@@ -2,7 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { FaExclamationTriangle, FaCheck } from 'react-icons/fa';
 
-export default async function notify(msg: string, type: string) {
+const notify = (msg: string, type: string): void => {
   const content = (
     <div className="toast-card">
       {type === 'error' ? <FaExclamationTriangle color="#fff" size={18} /> : <FaCheck color="#fff" size={18} />}
@@ -29,4 +29,6 @@ export default async function notify(msg: string, type: string) {
       draggable: true,
     });
   }
-}
+};
+
+export default notify;

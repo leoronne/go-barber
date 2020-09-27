@@ -26,6 +26,14 @@ class FakeUserTokensRepository implements IUserTokensRepository {
 
     return userToken;
   }
+
+  public async save(userToken: UserToken): Promise<UserToken> {
+    const findIndex = this.usersTokens.findIndex(findToken => findToken.token === userToken.token);
+
+    this.usersTokens[findIndex] = userToken;
+
+    return this.usersTokens[findIndex];
+  }
 }
 
 export default FakeUserTokensRepository;

@@ -15,11 +15,7 @@ describe('SendForgotPasswordEmailService', () => {
     fakeMailProvider = new FakeMailProvider();
     fakeUserTokensRepository = new FakeUserTokensRepository();
 
-    sendForgotPasswordEmailService = new SendForgotPasswordEmailService(
-      fakeUsersRepository,
-      fakeMailProvider,
-      fakeUserTokensRepository,
-    );
+    sendForgotPasswordEmailService = new SendForgotPasswordEmailService(fakeUsersRepository, fakeMailProvider, fakeUserTokensRepository);
   });
 
   it('should be able to recover password using email', async () => {
@@ -39,9 +35,7 @@ describe('SendForgotPasswordEmailService', () => {
   });
 
   it('should not be able to recover a non-existing email', async () => {
-    await expect(
-      sendForgotPasswordEmailService.execute({ email: 'johndoe@example.com' }),
-    ).rejects.toBeInstanceOf(AppError);
+    await expect(sendForgotPasswordEmailService.execute({ email: 'johndoe@example.com' })).rejects.toBeInstanceOf(AppError);
   });
 
   it('should generate a forgot password token', async () => {

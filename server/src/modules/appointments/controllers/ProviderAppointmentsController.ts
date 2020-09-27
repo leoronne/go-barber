@@ -10,7 +10,7 @@ class ProviderAppointmentsController {
   public async index(request: Request, response: Response): Promise<Response> {
     try {
       const { id: provider_id } = request.user;
-      const { day, month, year } = request.query;
+      const { day = new Date().getDate(), month = new Date().getMonth() + 1, year = new Date().getFullYear() } = request.query;
 
       const listProviderAppointments = container.resolve(ListProviderAppointmentsService);
 

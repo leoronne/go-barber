@@ -9,10 +9,9 @@ class ProvidersDayAvailabilityController {
   public async index(request: Request, response: Response): Promise<Response> {
     try {
       const { provider_id } = request.params;
-      const { day, month, year } = request.query;
+      const { day = new Date().getDate(), month = new Date().getMonth() + 1, year = new Date().getFullYear() } = request.query;
 
       const listProviderDayAvailability = container.resolve(ListProviderDayAvailabilityService);
-
       const availability = await listProviderDayAvailability.execute({
         provider_id,
         day: Number(day),

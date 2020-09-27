@@ -41,6 +41,7 @@ class ResetPasswordService {
       if (!userToken) {
         throw new AppError('User token does not exists', 401);
       }
+
       const user = await this.usersRepository.findById(userToken.user_id);
 
       if (!user) {
@@ -54,9 +55,17 @@ class ResetPasswordService {
         throw new AppError('Token expired', 401);
       }
 
+      const tokenWasUsed = userToken.was_used;
+
+      if (tokenWasUsed) {
+        throw new AppError('Token is not valid anymore', 401);
+      }
+
       user.password = await this.hashProvider.generateHash(password);
+      userToken.was_used = true;
 
       await this.usersRepository.save(user);
+      await this.userTokensRepository.save(userToken);
     } catch (err) {
       throw new AppError(err.message, 500);
     }

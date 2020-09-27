@@ -13,6 +13,6 @@ appointmentsRouter.use(ensureAuthentication);
 appointmentsRouter
   .post('/', celebrate(AppointmentsValidator.store), AppointmentsController.store)
 
-  .get('/me', ProviderAppointmentsController.index);
+  .get('/me', celebrate(AppointmentsValidator.index), ProviderAppointmentsController.index);
 
 export default appointmentsRouter;

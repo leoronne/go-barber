@@ -15,11 +15,7 @@ describe('ResetPasswordService', () => {
     fakeUserTokensRepository = new FakeUserTokensRepository();
     fakeHashProvider = new FakeHashProvider();
 
-    resetPasswordService = new ResetPasswordService(
-      fakeUsersRepository,
-      fakeUserTokensRepository,
-      fakeHashProvider,
-    );
+    resetPasswordService = new ResetPasswordService(fakeUsersRepository, fakeUserTokensRepository, fakeHashProvider);
   });
 
   it('should be able to reset password', async () => {
@@ -49,20 +45,42 @@ describe('ResetPasswordService', () => {
       resetPasswordService.execute({
         token: 'non-existing',
         password: '123456',
-      }),
+      })
     ).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to reset password with non-existing user', async () => {
-    const { token } = await fakeUserTokensRepository.generate(
-      'non-existing-user',
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '12345678',
+    });
+
+    const { token } = await fakeUserTokensRepository.generate(user.id);
+
+    await expect(
+      resetPasswordService.execute({
+        password: '123123',
+        token,
+      })
     );
+
+    await expect(
+      resetPasswordService.execute({
+        password: '123123',
+        token,
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to reset password with used token', async () => {
+    const { token } = await fakeUserTokensRepository.generate('non-existing-user');
 
     await expect(
       resetPasswordService.execute({
         token,
         password: '123456',
-      }),
+      })
     ).rejects.toBeInstanceOf(AppError);
   });
 
@@ -85,7 +103,7 @@ describe('ResetPasswordService', () => {
       resetPasswordService.execute({
         password: '123123',
         token,
-      }),
+      })
     ).rejects.toBeInstanceOf(AppError);
   });
 });

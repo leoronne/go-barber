@@ -12,6 +12,9 @@ class UserToken {
   @Column()
   user_id: string;
 
+  @Column()
+  was_used: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 

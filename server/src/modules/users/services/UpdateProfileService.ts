@@ -10,7 +10,7 @@ interface IRequest {
   name: string;
   email: string;
   password?: string;
-  oldPassword?: string;
+  old_password?: string;
 }
 
 @injectable()
@@ -26,7 +26,7 @@ class UpdateProfileService {
     this.hashProvider = hashProvider;
   }
 
-  public async execute({ user_id, name, email, password, oldPassword }: IRequest): Promise<User | undefined> {
+  public async execute({ user_id, name, email, password, old_password }: IRequest): Promise<User | undefined> {
     try {
       const user = await this.usersRepository.findById(user_id);
 
@@ -42,12 +42,12 @@ class UpdateProfileService {
 
       Object.assign(user, { name, email });
 
-      if (password && !oldPassword) {
+      if (password && !old_password) {
         throw new AppError('You need to send the old password to create a new', 401);
       }
 
-      if (password && oldPassword) {
-        const validOldPassword = await this.hashProvider.compareHash(oldPassword, user.password);
+      if (password && old_password) {
+        const validOldPassword = await this.hashProvider.compareHash(old_password, user.password);
 
         if (!validOldPassword) {
           throw new AppError('Old password is wrong', 401);

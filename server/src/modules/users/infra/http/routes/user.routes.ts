@@ -15,7 +15,7 @@ const upload = multer(uploadConfig.multer);
 userRouter
   .post('/', celebrate(UsersValidator.store), UsersController.store)
   .post('/forgotpassword', celebrate(UsersValidator.forgotpassword), UsersController.forgotPassword)
-  .post('/reset', celebrate(UsersValidator.resetpassword), UsersController.resetPassword)
+  .post('/password/reset', celebrate(UsersValidator.resetpassword), UsersController.resetPassword)
   .use(ensureAuthentication)
   .patch('/avatar', upload.single('avatar'), UsersController.updateAvatar);
 

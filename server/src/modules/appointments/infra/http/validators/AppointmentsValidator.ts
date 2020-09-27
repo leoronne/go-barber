@@ -7,4 +7,11 @@ export default {
       date: Joi.date().error(new Error('Invalid date')),
     },
   },
+  index: {
+    [Segments.QUERY]: {
+      day: Joi.number().error(new Error('Invalid day')),
+      month: Joi.number().error(new Error('Invalid month')),
+      year: Joi.number().error(new Error('Invalid year')),
+    },
+  },
 };

@@ -38,6 +38,14 @@ class UserTokensRepository implements IUserTokensRepository {
       throw new AppError(err.message, 500);
     }
   }
+
+  public async save(userToken: UserToken): Promise<UserToken> {
+    try {
+      return this.ormRepository.save(userToken);
+    } catch (err) {
+      throw new AppError(err.message, 500);
+    }
+  }
 }
 
 export default UserTokensRepository;

@@ -14,7 +14,7 @@ providersRouter.use(ensureAuthentication);
 
 providersRouter
   .get('/', ProvidersController.index)
-  .get('/:provider_id/month-availability', celebrate(ProvidersValidator.montAvailability), ProvidersMonthAvailabilitycontroller.index)
+  .get('/:provider_id/month-availability', celebrate(ProvidersValidator.monthAvailability), ProvidersMonthAvailabilitycontroller.index)
   .get('/:provider_id/day-availability', celebrate(ProvidersValidator.dayAvailability), ProvidersDayAvailabilityController.index);
 
 export default providersRouter;

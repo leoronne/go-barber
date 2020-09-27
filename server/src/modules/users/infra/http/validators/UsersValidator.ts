@@ -17,7 +17,7 @@ export default {
     [Segments.BODY]: {
       token: Joi.string().uuid().required().error(new Error('Invalid token')),
       password: Joi.string().required().regex(new RegExp(`^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})`)).error(new Error('Invalid password!')),
-      passwordConfirmation: Joi.string().required().regex(new RegExp(`^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})`)).error(new Error('Invalid password!')),
+      password_confirmation: Joi.string().required().regex(new RegExp(`^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})`)).error(new Error('Invalid password!')),
     },
   },
 };

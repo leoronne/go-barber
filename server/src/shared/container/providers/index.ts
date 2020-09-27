@@ -11,8 +11,13 @@ import SendGridMailProvider from './MailProvider/implementations/SendGridMailPro
 import IMailTemplateProvider from './MailTemplateProvider/models/IMailTemplateProvider';
 import HandlebarsMailTemplateProvider from './MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
 
+import ICacheProvider from './CacheProvider/models/ICacheProvider';
+import RedisCacheProvider from './CacheProvider/implementations/RedisCacheProvider';
+
 container.registerSingleton<IStorageProvider>('StorageProvider', storageConfig.driver === 'disk' ? DiskStorageProvider : S3StorageProvider);
 
 container.registerSingleton<IMailTemplateProvider>('MailTemplateProvider', HandlebarsMailTemplateProvider);
 
 container.registerInstance<IMailProvider>('MailProvider', container.resolve(SendGridMailProvider));
+
+container.registerSingleton<ICacheProvider>('CacheProvider', RedisCacheProvider);

@@ -42,7 +42,7 @@ class SendGridMailProvider implements IMailProvider {
 
   public async sendMail({ to, subject, template }: ISendMailDTO): Promise<void> {
     await this.transporter.sendMail({
-      from: `"${MAIL_FROM}" <go-barber@no-reply.com>`,
+      from: `"${MAIL_FROM}" <gobarber@no-reply.com>`,
       to,
       subject,
       html: await this.mailTemplateProvider.parse(template),
