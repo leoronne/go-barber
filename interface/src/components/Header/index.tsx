@@ -1,34 +1,49 @@
 import React from 'react';
 
-import { FiPower } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/auth';
 
-import logoImg from '~/assets/svg/logo.svg';
+import DropdownHeader from './DropdownHeader';
 
-import { Container, HeaderContent, Profile, Info } from './styles';
+import getCurrentURL from '../../utils/getCurrentURL';
+
+import { useAuth, useChangeTheme } from '../../hooks';
+
+import { Container, HeaderContent, Logo, Profile, MoonIcon, SunIcon, HeaderRight, UserIcon } from './styles';
+
+import logo from '~/assets/svg/logo-interna.svg';
 
 const Header: React.FC = () => {
-  const { signOut, user } = useAuth();
+  const { user } = useAuth();
+  const { themeName, handleChangeTheme } = useChangeTheme();
+
+  const currentUrl = getCurrentURL();
 
   return (
     <Container>
       <HeaderContent>
-        <img src={logoImg} alt="logo" />
+        <Logo>
+          <Link to="/">
+            <img src={logo} loading="lazy" alt="Go Barber" />
+          </Link>
 
-        <Profile>
-          <img src={user.avatar_url} alt={user.id} />
-          <Info>
-            <span>Bem-vindo(a), </span>
+          <Link to="/">
+            <span>go barber</span>
+          </Link>
+
+          {themeName === 'light' ? <MoonIcon onClick={handleChangeTheme} /> : <SunIcon onClick={handleChangeTheme} />}
+        </Logo>
+
+        <HeaderRight>
+          <Profile className={currentUrl === '/profile' ? 'active' : ''}>
             <Link to="/profile">
-              <strong>{user.name}</strong>
-            </Link>
-          </Info>
-        </Profile>
+              {user.avatar_url ? <img src={user.avatar_url} alt={user.id} /> : <UserIcon />}
 
-        <button onClick={signOut} type="button">
-          <FiPower />
-        </button>
+              <span>{user.name && user.name.replace(/ .*/, '')}</span>
+            </Link>
+          </Profile>
+
+          <DropdownHeader user={user} />
+        </HeaderRight>
       </HeaderContent>
     </Container>
   );

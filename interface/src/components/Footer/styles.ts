@@ -1,34 +1,22 @@
+/* eslint-disable import/prefer-default-export */
 import styled from 'styled-components';
 
-import { SocialGithub } from 'styled-icons/foundation';
-
 export const Container = styled.div`
-  grid-area: FT;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--secondary);
-  padding: 10px;
-  line-height: 1.9;
-
-  p {
+  background: transparent;
+  padding: 15px;
+  > p {
+    margin-top: 45px;
+    color: var(--text-color);
     font-size: 12px;
-    color: var(--quaternary);
-  }
-  
-  a {
-    transition: var(--filter-transition);
-  }
+    font-weight: 500;
+    text-align: center;
 
-  a:hover {
-    text-decoration: none;
-    filter: var(--hover-effect);
+    > a {
+      text-decoration: none;
+      color: var(--color-primary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
   }
-`;
-
-export const GithubIcon = styled(SocialGithub)`
-  width: 20px;
-  height: 20px;
-  color: var(--quaternary);
 `;

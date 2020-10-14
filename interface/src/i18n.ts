@@ -1,9 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { Cookies } from 'react-cookie-consent';
 
 import Backend from 'i18next-xhr-backend';
 
-const lgnstrg = localStorage.getItem('defaultLanguage') !== 'pt' ? 'en' : 'pt';
+const lgnstrg = Cookies.get('@GoBarber:language');
 
 i18n
   .use(Backend)
@@ -11,7 +12,7 @@ i18n
   .init({
     debug: true,
 
-    lng: lgnstrg,
+    lng: lgnstrg || 'en',
     fallbackLng: 'en',
     whitelist: ['en', 'pt'],
 

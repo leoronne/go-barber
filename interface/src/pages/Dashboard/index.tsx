@@ -1,17 +1,19 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { CircularProgress } from '@material-ui/core';
 
 import { isToday, isAfter, format, parseISO } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
+import { ptBR, enUS } from 'date-fns/locale';
 import DayPicker, { DayModifiers } from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+
 import { FiClock } from 'react-icons/fi';
-import blankAvatar from '../../assets/svg/blank-avatar.svg';
-import Header from '../../components/Header';
 
-import { Container, Content, Schedule, NextAppointment, Section, Appointment, Calendar } from './styles';
-
-import { useAuth } from '../../hooks/auth';
+import { useAuth, useLanguage } from '../../hooks';
 import api from '../../services/api';
+import notify from '../../services/toast';
+
+import 'react-day-picker/lib/style.css';
+import { Content, Schedule, NextAppointment, Section, Loader, Appointment, Calendar, UserIcon } from './styles';
 
 interface MonthAvailabilityItem {
   day: number;
@@ -29,46 +31,68 @@ interface ScheduleAppointment {
 }
 
 const Dashboard: React.FC = () => {
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const { language } = useLanguage();
+
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [appointments, setAppointments] = useState<ScheduleAppointment[]>([]);
   const [monthAvailability, setMonthAvailability] = useState<MonthAvailabilityItem[]>([]);
 
-  const { user } = useAuth();
-
-  useEffect(() => {
-    api
-      .get<MonthAvailabilityItem[]>(`/providers/${user.id}/month-availability`, {
-        params: {
-          year: currentMonth.getFullYear(),
-          month: currentMonth.getMonth() + 1,
-        },
-      })
-      .then(response => {
-        setMonthAvailability(response.data);
-      });
-  }, [currentMonth, user.id]);
-
-  useEffect(() => {
-    api
-      .get<ScheduleAppointment[]>('/appointments/me', {
+  const loadProviderAppointments = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await api.get<ScheduleAppointment[]>('/appointments/me', {
         params: {
           year: selectedDate.getFullYear(),
           month: selectedDate.getMonth() + 1,
           day: selectedDate.getDate(),
         },
-      })
-      .then(response => {
-        const appointmentsFormatted = response.data.map(appointment => {
-          return {
-            ...appointment,
-            hourFormatted: format(parseISO(appointment.date), 'HH:mm'),
-          };
-        });
-
-        setAppointments(appointmentsFormatted);
       });
-  }, [selectedDate]);
+
+      const { data } = response;
+
+      const appointmentsFormatted = data.map(appointment => {
+        return {
+          ...appointment,
+          hourFormatted: format(parseISO(appointment.date), `${language === 'pt' ? 'HH:mm' : 'KK:mm a'}`),
+        };
+      });
+
+      setAppointments(appointmentsFormatted);
+    } catch (err) {
+      setAppointments([]);
+      notify(err?.response?.data?.message ? err.response.data.message : err.message, 'error');
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedDate, language]);
+
+  const loadMonthAvailability = useCallback(async () => {
+    try {
+      const response = await api.get<MonthAvailabilityItem[]>(`/providers/${user.id}/month-availability`, {
+        params: {
+          year: currentMonth.getFullYear(),
+          month: currentMonth.getMonth() + 1,
+        },
+      });
+      const { data } = response;
+      setMonthAvailability(data);
+    } catch (err) {
+      setMonthAvailability([]);
+      notify(err?.response?.data?.message ? err.response.data.message : err.message, 'error');
+    }
+  }, [currentMonth, user.id]);
+
+  useEffect(() => {
+    loadMonthAvailability();
+  }, [loadMonthAvailability]);
+
+  useEffect(() => {
+    loadProviderAppointments();
+  }, [loadProviderAppointments]);
 
   const handleDateChange = useCallback((day: Date, modifiers: DayModifiers) => {
     if (modifiers.available && !modifiers.disabled) {
@@ -94,16 +118,10 @@ const Dashboard: React.FC = () => {
   }, [currentMonth, monthAvailability]);
 
   const selectedDateAsText = useMemo(() => {
-    return format(selectedDate, "'Dia' dd 'de' MMMM", {
-      locale: ptBR,
+    return format(selectedDate, 'PPPP', {
+      locale: language === 'pt' ? ptBR : enUS,
     });
-  }, [selectedDate]);
-
-  const selectedWeekDay = useMemo(() => {
-    return format(selectedDate, 'cccc', {
-      locale: ptBR,
-    });
-  }, [selectedDate]);
+  }, [selectedDate, language]);
 
   const morningAppointments = useMemo(() => {
     return appointments.filter(appointment => {
@@ -122,83 +140,85 @@ const Dashboard: React.FC = () => {
   }, [appointments]);
 
   return (
-    <Container>
-      <Header />
-      <Content>
-        <Schedule>
-          <h1>Horários agendados</h1>
-          <p>
-            {isToday(selectedDate) && <span>Hoje</span>}
-            <span>{selectedDateAsText}</span>
-            <span>{selectedWeekDay}</span>
-          </p>
-          {isToday(selectedDate) && nextAppointment && (
-            <NextAppointment>
-              <strong>Agendamento a seguir</strong>
-              <div>
-                <img src={nextAppointment.user.avatar_url} alt={nextAppointment.id} />
+    <Content>
+      <Schedule>
+        <h1>{t('scheduledAppointments')}</h1>
+        <p>
+          <span>{selectedDateAsText}</span>
+        </p>
 
-                <strong>{nextAppointment.user.name}</strong>
-                <span>
-                  <FiClock />
-                  {nextAppointment.hourFormatted}
-                </span>
-              </div>
-            </NextAppointment>
-          )}
-
-          <Section>
-            <strong>Manhã</strong>
-
-            {morningAppointments.length === 0 && <p>Nenhum agendamento marcado nesse período</p>}
-            {morningAppointments.map(appointment => (
-              <Appointment key={appointment.id}>
-                <span>
-                  <FiClock />
-                  {appointment.hourFormatted}
-                </span>
+        {loading ? (
+          <Loader>
+            <CircularProgress size={15} style={{ color: '#7159c1' }} />
+          </Loader>
+        ) : (
+          <>
+            {isToday(selectedDate) && nextAppointment && (
+              <NextAppointment>
+                <strong>{t('nextAppointmenst')}</strong>
                 <div>
-                  <img src={appointment.user.avatar_url || blankAvatar} alt={appointment.user.name} />
+                  <img src={nextAppointment.user.avatar_url} alt={nextAppointment.id} />
 
-                  <strong>{appointment.user.name}</strong>
+                  <strong>{nextAppointment.user.name}</strong>
+                  <span>
+                    <FiClock />
+                    {nextAppointment.hourFormatted}
+                  </span>
                 </div>
-              </Appointment>
-            ))}
-          </Section>
-          <Section>
-            <strong>Tarde</strong>
-            {afternoonAppointments.length === 0 && <p>Nenhum agendamento marcado nesse período</p>}
-            {afternoonAppointments.map(appointment => (
-              <Appointment key={appointment.id}>
-                <span>
-                  <FiClock />
-                  {appointment.hourFormatted}
-                </span>
-                <div>
-                  <img src={appointment.user.avatar_url || blankAvatar} alt={appointment.user.name} />
+              </NextAppointment>
+            )}
+            <Section>
+              <strong>{t('morning')}</strong>
 
-                  <strong>{appointment.user.name}</strong>
-                </div>
-              </Appointment>
-            ))}
-          </Section>
-        </Schedule>
-        <Calendar>
-          <DayPicker
-            weekdaysShort={['D', 'S', 'T', 'Q', 'Q', 'S', 'S']}
-            fromMonth={new Date()}
-            selectedDays={selectedDate}
-            disabledDays={[{ daysOfWeek: [0, 6] }, ...disabledDays]}
-            modifiers={{
-              available: { daysOfWeek: [1, 2, 3, 4, 5] },
-            }}
-            onDayClick={handleDateChange}
-            onMonthChange={handleMonthChange}
-            months={['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']}
-          />
-        </Calendar>
-      </Content>
-    </Container>
+              {morningAppointments.length === 0 && <p>{t('noAppointments')}</p>}
+              {morningAppointments.map(appointment => (
+                <Appointment key={appointment.id}>
+                  <span>
+                    <FiClock />
+                    {appointment.hourFormatted}
+                  </span>
+                  <div>
+                    {appointment.user.avatar_url ? <img src={appointment.user.avatar_url} alt={appointment.user.name} /> : <UserIcon />}
+                    <strong>{appointment.user.name}</strong>
+                  </div>
+                </Appointment>
+              ))}
+            </Section>
+            <Section>
+              <strong>{t('afternoon')}</strong>
+              {afternoonAppointments.length === 0 && <p>{t('noAppointments')}</p>}
+              {afternoonAppointments.map(appointment => (
+                <Appointment key={appointment.id}>
+                  <span>
+                    <FiClock />
+                    {appointment.hourFormatted}
+                  </span>
+                  <div>
+                    {appointment.user.avatar_url ? <img src={appointment.user.avatar_url} alt={appointment.user.name} /> : <UserIcon />}
+
+                    <strong>{appointment.user.name}</strong>
+                  </div>
+                </Appointment>
+              ))}
+            </Section>
+          </>
+        )}
+      </Schedule>
+      <Calendar>
+        <DayPicker
+          weekdaysShort={[t('shortSunday'), t('shortMonday'), t('shortTuesday'), t('shortWednesday'), t('shortThursday'), t('shortFriday'), t('shortSaturday')]}
+          fromMonth={new Date()}
+          selectedDays={selectedDate}
+          disabledDays={[{ daysOfWeek: [0] }, ...disabledDays]}
+          modifiers={{
+            available: { daysOfWeek: [1, 2, 3, 4, 5, 6] },
+          }}
+          onDayClick={handleDateChange}
+          onMonthChange={handleMonthChange}
+          months={[t('jan'), t('feb'), t('mar'), t('apr'), t('may'), t('jun'), t('jul'), t('aug'), t('sept'), t('out'), t('nov'), t('dec')]}
+        />
+      </Calendar>
+    </Content>
   );
 };
 

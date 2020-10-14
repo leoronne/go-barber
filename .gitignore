@@ -20,3 +20,5 @@ server/temp/uploads/*.*
 server/!temp/.gitkeep
 
 *.psd
+
+backup/

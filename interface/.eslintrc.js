@@ -25,6 +25,7 @@ module.exports = {
     'array-callback-retur': 0,
     '@typescript-eslint/no-explicit-any': 0,
     'jsx-a11y/label-has-associated-control': 0,
-    'camelcase': 0
+    camelcase: 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };

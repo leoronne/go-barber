@@ -6,7 +6,7 @@
 .toast-message {
   font-size: 16px;
   font-weight: 400;
-  font-family: var(--font-family-base);
+  font-family: var(--font-family);
   margin-left: 15px;
 }
 

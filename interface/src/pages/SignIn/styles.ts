@@ -1,21 +1,13 @@
 import styled, { css, keyframes } from 'styled-components';
 
-import { LogIn } from 'styled-icons/boxicons-regular';
-import { UserPlus } from 'styled-icons/boxicons-solid';
-import { VpnKey } from 'styled-icons/material';
-
-import signinbg from '~assets/img/sign-in-background.png';
+import { CgLogIn } from 'react-icons/cg';
+import { FaUserPlus } from 'react-icons/fa';
+import { RiKeyFill } from 'react-icons/ri';
 
 const iconCSS = css`
   width: 15px;
   height: 15px;
   color: var(--primary);
-`;
-
-export const Container = styled.div`
-  display: flex;
-  align-items: stretch;
-  height: 100vh;
 `;
 
 export const Content = styled.div`
@@ -24,9 +16,13 @@ export const Content = styled.div`
   align-items: center;
   place-content: center;
   width: 100%;
-  max-width: 700px;
-  transition: var(--transition-slow);
+  height: 100%;
+  transition: var(--transition);
   overflow: hidden;
+
+  @media (min-width: 760px) {
+    width: 50%;
+  }
 `;
 
 const appearFromLeft = keyframes`
@@ -50,78 +46,54 @@ export const AnimationContainer = styled.div`
 
   form {
     margin: 40px 0;
-    padding: 20px;
+    padding: 30px;
     width: 340px;
+
     text-align: center;
     border-radius: var(--border-radius);
-    background: var(--senary);
+    background: var(--dark-grey);
     box-shadow: var(--box-shadow);
     position: relative;
 
     h1 {
-      margin-bottom: 30px;
+      color: var(--title-color);
+      margin-bottom: 40px;
       font-size: 20px;
     }
 
-    .captcha {
-      margin: 25px 0 15px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .password-reset-message {
+      margin: 10px 20px 30px 20px;
+      font-size: 14px;
+      color: var(--text-color);
+    }
+
+    .submit-button {
+      margin-top: 20px;
     }
   }
 
   .bottom-links {
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition-slow);
+    transition: var(--transition);
 
     &:hover {
       filter: var(--hover-effect);
-      transition: var(--transition-slow);
+      transition: var(--transition);
     }
-  }
-
-  .back-link {
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: var(--font-color);
-    text-decoration: none;
-
-    &:hover {
-      filter: var(--hover-effect);
-      transition: var(--transition-slow);
-    }
-  }
-
-  .back-link svg {
-    color: var(--primary-light);
-    margin-right: 8px;
-  }
-
-  .back-link svg path {
-    color: var(--primary-light);
   }
 `;
 
-export const Background = styled.div`
-  flex: 1;
-  background: url(${signinbg}) no-repeat center;
-  background-size: cover;
-`;
-
-export const LogInIcon = styled(LogIn)`
+export const LogInIcon = styled(CgLogIn)`
   ${iconCSS}
 `;
 
-export const RegisterIcon = styled(UserPlus)`
+export const RegisterIcon = styled(FaUserPlus)`
   ${iconCSS}
 `;
 
-export const ForgotPassIcon = styled(VpnKey)`
+export const ForgotPassIcon = styled(RiKeyFill)`
   ${iconCSS}
 `;

@@ -18,6 +18,7 @@ export const { DB_PASSWORD } = process.env;
 export const { STORAGE_DRIVER } = process.env;
 export const { AWS_S3_BUCKET_URL } = process.env;
 export const { AWS_S3_BUCKET } = process.env;
+export const { AWS_DEFAULT_REGION } = process.env;
 export const { MAIL_DRIVER } = process.env;
 export const { MAIL_USER } = process.env;
 export const { MAIL_PASS } = process.env;

@@ -12,8 +12,8 @@ const notify = (msg: string, type: string): void => {
 
   if (type === 'error') {
     toast.error(content, {
-      position: 'top-center',
-      autoClose: 5000,
+      position: 'top-right',
+      autoClose: 6000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: false,
@@ -21,8 +21,8 @@ const notify = (msg: string, type: string): void => {
     });
   } else if (type === 'success') {
     toast.success(content, {
-      position: 'top-center',
-      autoClose: 5000,
+      position: 'top-right',
+      autoClose: 6000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: false,

@@ -1,25 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import { ToastContainer } from 'react-toastify';
-
-import { AuthProvider } from './hooks/auth';
 
 import Routes from './routes';
 
-import GlobalStyles from './styles/GlobalStyles';
+import { useChangeTheme } from './hooks';
 
+import GlobalStyles from './styles/GlobalStyles';
 import './styles/ReactToastify.css';
 
 const App: React.FC = () => {
+  const { currentTheme } = useChangeTheme();
+
   return (
     <>
-      <Router>
-        <ToastContainer />
-        <AuthProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={currentTheme}>
+          <ToastContainer />
+          <GlobalStyles />
           <Routes />
-        </AuthProvider>
-        <GlobalStyles />
-      </Router>
+        </ThemeProvider>
+      </BrowserRouter>
     </>
   );
 };

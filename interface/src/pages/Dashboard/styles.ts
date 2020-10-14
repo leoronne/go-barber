@@ -1,25 +1,44 @@
 import styled from 'styled-components';
-import { shade } from 'polished';
-
-export const Container = styled.div``;
+import { FaUserCircle } from 'react-icons/fa';
 
 export const Content = styled.main`
   max-width: 1120px;
+  width: 100%;
   margin: 64px auto;
   display: flex;
+  flex-direction: column-reverse;
+  transition: all var(--transition);
+
+  @media (min-width: 978px) {
+    justify-content: space-between;
+    flex-direction: row;
+    transition: all var(--transition);
+  }
 `;
 
 export const Schedule = styled.div`
   flex: 1;
-  margin-right: 120px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 978px) {
+    padding: 0 30px;
+    margin-top: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 
   h1 {
     font-size: 36px;
+    color: var(--title-color);
   }
 
   p {
     margin-top: 8px;
-    color: var(--primary);
+    color: var(--color-primary);
     display: flex;
     align-items: center;
     font-weight: 500;
@@ -34,7 +53,7 @@ export const Schedule = styled.div`
       content: '';
       width: 1px;
       height: 12px;
-      background: var(--primary);
+      background: var(--color-primary);
       margin: 0 8px;
     }
   }
@@ -65,7 +84,7 @@ export const NextAppointment = styled.div`
       width: 1px;
       left: 0;
       top: 10%;
-      background: var(--primary);
+      background: var(--color-primary);
     }
 
     img {
@@ -76,7 +95,7 @@ export const NextAppointment = styled.div`
 
     strong {
       margin-left: 24px;
-      color: #fff;
+      color: var(--color-white);
     }
 
     span {
@@ -86,7 +105,7 @@ export const NextAppointment = styled.div`
       color: #999591;
 
       svg {
-        color: var(--primary);
+        color: var(--color-primary);
         margin-right: 8px;
       }
     }
@@ -97,18 +116,29 @@ export const Section = styled.div`
   margin-top: 48px;
 
   > strong {
-    color: #999591;
+    color: var(--text-color);
     font-size: 20px;
     line-height: 26px;
-    border-bottom: 1px solid #3e3b47;
+    border-bottom: 1px solid var(--day-available);
     display: block;
     padding-bottom: 16px;
     margin-bottom: 16px;
   }
 
   > p {
-    color: #999591;
+    color: var(--text-color);
+    font-weight: 400;
+    font-size: 16px;
   }
+`;
+
+export const Loader = styled.div`
+  max-width: 500px;
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
 
 export const Appointment = styled.div`
@@ -120,21 +150,23 @@ export const Appointment = styled.div`
   }
 
   span {
+    font-size: 14px;
     margin-left: auto;
     display: flex;
     align-items: center;
-    width: 70px;
-    color: #f4ede8;
+    width: 90px;
+    color: var(--color-primary-light);
 
     svg {
-      color: var(--primary);
+      width: 15px;
+      color: var(--color-primary);
       margin-right: 8px;
     }
   }
 
   div {
     flex: 1;
-    background: #3e3b47;
+    background: var(--calendar-background);
     display: flex;
     align-items: center;
     padding: 16px 24px;
@@ -150,17 +182,21 @@ export const Appointment = styled.div`
     strong {
       margin-left: 24px;
       font-size: 20px;
-      color: #fff;
+      color: var(--text-color);
     }
   }
 `;
 
 export const Calendar = styled.aside`
-  width: 380px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 30px;
 
   .DayPicker {
-    background: #28262e;
+    background: var(--calendar-background);
     border-radius: 10px;
+    max-width: 380px;
   }
 
   .DayPicker-wrapper {
@@ -173,6 +209,7 @@ export const Calendar = styled.aside`
   }
 
   .DayPicker-Month {
+    color: var(--text-color);
     border-collapse: separate;
     border-spacing: 8px;
     margin: 16px;
@@ -184,13 +221,14 @@ export const Calendar = styled.aside`
   }
 
   .DayPicker-Day--available:not(.DayPicker-Day--outside) {
-    background: #3e3b47;
+    background: var(--day-available);
     border-radius: 10px;
-    color: #fff;
+    color: var(--color-white);
   }
 
   .DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-    background: ${shade(0.2, '#3e3b47')};
+    background: #585466;
+    color: var(--color-white) !important;
   }
 
   .DayPicker-Day--today {
@@ -198,13 +236,19 @@ export const Calendar = styled.aside`
   }
 
   .DayPicker-Day--disabled {
-    color: #666360 !important;
+    color: var(--disabled) !important;
     background: transparent !important;
   }
 
   .DayPicker-Day--selected {
-    background: var(--primary) !important;
+    background: var(--color-primary) !important;
     border-radius: 10px;
-    color: #232129 !important;
+    color: var(--color-white) !important;
   }
+`;
+
+export const UserIcon = styled(FaUserCircle)`
+  color: var(--text-color);
+  width: 35px;
+  height: 35px;
 `;

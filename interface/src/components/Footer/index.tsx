@@ -1,21 +1,19 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { Container, GithubIcon } from './styles';
+import { Container } from './styles';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
-    <Container data-testid="footer-cointainer">
-      <p className="text--center">{`©${new Date().getFullYear()}. All Rights Reserved.`}</p>
+    <Container>
       <p>
-        <a
-          href="https://github.com/leoronne/go-barber"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-tip="GitHub Project"
-          data-testid="footer-link"
-        >
-          <GithubIcon />
+        {`© ${new Date().getFullYear()}. ${t('designed')}  `}
+        <a href="http://github.com/leoronne" target="_blank" rel="noopener noreferrer">
+          Leonardo Ronne
         </a>
+        .
       </p>
     </Container>
   );

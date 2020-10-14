@@ -1,20 +1,12 @@
 import React from 'react';
-import { BeatLoader } from 'react-spinners';
+import { CircularProgress } from '@material-ui/core';
 
 import { Container } from './styles';
 
 const Loader: React.FC = () => {
   return (
     <Container className="loader-container">
-      <BeatLoader
-        css={`
-          display: block;
-          margin: 0 auto;
-          border-color: red;
-        `}
-        size={18}
-        color="#c3c3c3"
-      />
+      <CircularProgress size={15} style={{ color: '#7159c1' }} />
     </Container>
   );
 };

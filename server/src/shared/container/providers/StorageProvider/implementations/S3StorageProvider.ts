@@ -4,7 +4,7 @@ import aws, { S3 } from 'aws-sdk';
 import mime from 'mime';
 import uploadConfig from '@config/upload';
 
-import { AWS_S3_BUCKET } from '@shared/utils/environment';
+import { AWS_S3_BUCKET, AWS_DEFAULT_REGION } from '@shared/utils/environment';
 import AppError from '@shared/errors/AppError';
 import IStorageProvider from '../models/IStorageProvider';
 
@@ -13,7 +13,7 @@ class S3StorageProvider implements IStorageProvider {
 
   constructor() {
     this.client = new aws.S3({
-      region: 'us-east-1',
+      region: String(AWS_DEFAULT_REGION),
     });
   }
 
@@ -32,7 +32,7 @@ class S3StorageProvider implements IStorageProvider {
 
     await this.client
       .putObject({
-        Bucket: AWS_S3_BUCKET || 'go-barber-ronne',
+        Bucket: String(AWS_S3_BUCKET),
         Key: file,
         ACL: 'public-read',
         ContentType: fileType,
@@ -47,7 +47,7 @@ class S3StorageProvider implements IStorageProvider {
   public async deleteFile(file: string): Promise<void> {
     await this.client
       .deleteObject({
-        Bucket: AWS_S3_BUCKET || 'go-barber-ronne',
+        Bucket: String(AWS_S3_BUCKET),
         Key: file,
       })
       .promise();
